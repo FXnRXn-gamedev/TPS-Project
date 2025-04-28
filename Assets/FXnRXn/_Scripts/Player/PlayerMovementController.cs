@@ -494,7 +494,7 @@ namespace FXnRXn
 			// CheckEnableTurns();
 			// CheckEnableLean();
 			// CalculateRotationalAdditives(_enableLean, _enableHeadTurn, _enableBodyTurn);
-			Debug.Log("Locomotion Update");
+			
 			CalculateMoveDirection();
 			CheckIfStarting();
 			CheckIfStopped();
