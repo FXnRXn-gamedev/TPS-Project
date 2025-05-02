@@ -30,7 +30,44 @@ namespace FXnRXn
 		#endregion
 
 		#region Animation Variable Hashes
+		private readonly int movementInputTappedHash = Animator.StringToHash("MovementInputTapped");
+        private readonly int movementInputPressedHash = Animator.StringToHash("MovementInputPressed");
+        private readonly int movementInputHeldHash = Animator.StringToHash("MovementInputHeld");
+        private readonly int shuffleDirectionXHash = Animator.StringToHash("ShuffleDirectionX");
+        private readonly int shuffleDirectionZHash = Animator.StringToHash("ShuffleDirectionZ");
 
+        private readonly int moveSpeedHash = Animator.StringToHash("MoveSpeed");
+        private readonly int currentGaitHash = Animator.StringToHash("CurrentGait");
+
+        private readonly int isJumpingAnimHash = Animator.StringToHash("IsJumping");
+        private readonly int fallingDurationHash = Animator.StringToHash("FallingDuration");
+
+        private readonly int inclineAngleHash = Animator.StringToHash("InclineAngle");
+
+        private readonly int strafeDirectionXHash = Animator.StringToHash("StrafeDirectionX");
+        private readonly int strafeDirectionZHash = Animator.StringToHash("StrafeDirectionZ");
+
+        private readonly int forwardStrafeHash = Animator.StringToHash("ForwardStrafe");
+        private readonly int cameraRotationOffsetHash = Animator.StringToHash("CameraRotationOffset");
+        private readonly int isStrafingHash = Animator.StringToHash("IsStrafing");
+        private readonly int isTurningInPlaceHash = Animator.StringToHash("IsTurningInPlace");
+
+        private readonly int isCrouchingHash = Animator.StringToHash("IsCrouching");
+
+        private readonly int isWalkingHash = Animator.StringToHash("IsWalking");
+        private readonly int isStoppedHash = Animator.StringToHash("IsStopped");
+        private readonly int isStartingHash = Animator.StringToHash("IsStarting");
+
+        private readonly int isGroundedHash = Animator.StringToHash("IsGrounded");
+
+        private readonly int leanValueHash = Animator.StringToHash("LeanValue");
+        private readonly int headLookXHash = Animator.StringToHash("HeadLookX");
+        private readonly int headLookYHash = Animator.StringToHash("HeadLookY");
+
+        private readonly int bodyLookXHash = Animator.StringToHash("BodyLookX");
+        private readonly int bodyLookYHash = Animator.StringToHash("BodyLookY");
+
+        private readonly int locomotionStartDirectionHash = Animator.StringToHash("LocomotionStartDirection");
 		
 
 		#endregion
@@ -75,6 +112,28 @@ namespace FXnRXn
 		[SerializeField] private float								forwardStrafeMinThreshold	= -55.0f;
 		[SerializeField] private float								forwardStrafeMaxThreshold	= 125.0f;
 		[SerializeField] private float								forwardStrafe				= 1f;
+		
+		[Header("Player Head Look")]
+		[SerializeField] private bool								enableHeadTurn				= true;
+		[SerializeField] private float								headLookDelay;
+		[SerializeField] private float								headLookX;
+		[SerializeField] private float								headLookY;
+		[SerializeField] private AnimationCurve						headLookXCurve;
+		
+		[Header("Player Body Look")]
+		[SerializeField] private bool								enableBodyTurn				= true;
+		[SerializeField] private float								bodyLookDelay;
+		[SerializeField] private float								bodyLookX;
+		[SerializeField] private float								bodyLookY;
+		[SerializeField] private AnimationCurve						bodyLookXCurve;
+		
+		[Header("Player Lean")]
+		[SerializeField] private bool								enableLean					= true;
+		[SerializeField] private float								leanDelay;
+		[SerializeField] private float								leanValue;
+		[SerializeField] private AnimationCurve						leanCurve;
+		[SerializeField] private float								leansHeadLooksDelay;
+		[SerializeField] private bool								animationClipEnd;
 
 
 		private AnimationState										currentState				= AnimationState.Base;
@@ -93,6 +152,7 @@ namespace FXnRXn
 		private bool												movementInputPressed;
 		private bool												movementInputTapped;
 		private float												currentMaxSpeed;
+		private Vector3												currentRotation				= new Vector3(0f, 0f, 0f);
 		private Vector3												moveDirection;
 		private Vector3												velocity;
 		private float												speed2D;
@@ -101,6 +161,7 @@ namespace FXnRXn
 		private float												strafeAngle;
 		private float												strafeDirectionX;
 		private float												strafeDirectionZ;
+		private float												locomotionStartTimer;
 		
 		
 		private const float											STRAFE_DIRECTION_DAMP_TIME	= 20f;
@@ -108,6 +169,9 @@ namespace FXnRXn
 		private float												targetMaxSpeed;
 		private Vector3												targetVelocity;
 		private Vector3												cameraForward;
+		private float												rotationRate;
+		private float												initialLeanValue;
+		private float												initialTurnValue;
 		
 		#endregion
 		
@@ -204,7 +268,40 @@ namespace FXnRXn
 
 			private void UpdateAnimatorController()
 			{
-				
+				playerAnim.SetFloat(leanValueHash, leanValue);
+				playerAnim.SetFloat(headLookXHash, headLookX);
+				playerAnim.SetFloat(headLookYHash, headLookY);
+				playerAnim.SetFloat(bodyLookXHash, bodyLookX);
+				playerAnim.SetFloat(bodyLookYHash, bodyLookY);
+
+				playerAnim.SetFloat(isStrafingHash, isStrafing ? 1.0f : 0.0f);
+
+				playerAnim.SetFloat(inclineAngleHash, inclineAngle);
+
+				playerAnim.SetFloat(moveSpeedHash, speed2D);
+				playerAnim.SetInteger(currentGaitHash, (int) currentGait);
+
+				playerAnim.SetFloat(strafeDirectionXHash, strafeDirectionX);
+				playerAnim.SetFloat(strafeDirectionZHash, strafeDirectionZ);
+				playerAnim.SetFloat(forwardStrafeHash, forwardStrafe);
+				playerAnim.SetFloat(cameraRotationOffsetHash, cameraRotationOffset);
+
+				playerAnim.SetBool(movementInputHeldHash, movementInputHeld);
+				playerAnim.SetBool(movementInputPressedHash, movementInputPressed);
+				playerAnim.SetBool(movementInputTappedHash, movementInputTapped);
+				playerAnim.SetFloat(shuffleDirectionXHash, shuffleDirectionX);
+				playerAnim.SetFloat(shuffleDirectionZHash, shuffleDirectionZ);
+
+				playerAnim.SetBool(isTurningInPlaceHash, isTurningInPlace);
+				playerAnim.SetBool(isCrouchingHash, isCrouching);
+
+				playerAnim.SetFloat(fallingDurationHash, fallingDuration);
+				playerAnim.SetBool(isGroundedHash, isGrounded);
+
+				playerAnim.SetBool(isWalkingHash, isWalking);
+				playerAnim.SetBool(isStoppedHash, isStopped);
+
+				//playerAnim.SetFloat(locomotionStartDirectionHash, locomotionStartDirection);
 			}
 
 			#endregion
@@ -368,8 +465,7 @@ namespace FXnRXn
 							
 							UpdateStrafeDirection(Vector3.Dot(characterForward, directionForward), Vector3.Dot(characterRight, directionForward));
 
-							cameraRotationOffset =
-								Mathf.Lerp(cameraRotationOffset, 0f, rotationSmoothing * Time.deltaTime);
+							cameraRotationOffset = Mathf.Lerp(cameraRotationOffset, 0f, rotationSmoothing * Time.deltaTime);
 							float targetValue = strafeAngle > forwardStrafeMinThreshold &&
 							                    strafeAngle < forwardStrafeMaxThreshold
 								? 1f
@@ -386,10 +482,11 @@ namespace FXnRXn
 							}
 
 						}
-						transform.rotation = Quaternion.Slerp(transform.rotation, strafingTargetRotation, rotationSmoothing * Time.deltaTime);
+						//transform.rotation = Quaternion.Slerp(transform.rotation, strafingTargetRotation, rotationSmoothing * Time.deltaTime);
 					}
 					else
 					{
+						
 						UpdateStrafeDirection(1f, 0f);
 
 						float t = 20 * Time.deltaTime;
@@ -403,6 +500,8 @@ namespace FXnRXn
 							isTurningInPlace = true;
 						}
 					}
+					
+					transform.rotation = Quaternion.Slerp(transform.rotation, strafingTargetRotation, rotationSmoothing * Time.deltaTime);
 				}
 				else
 				{
@@ -417,7 +516,6 @@ namespace FXnRXn
 					
 					transform.rotation = Quaternion.Slerp(transform.rotation,  Quaternion.LookRotation(faceDirection), rotationSmoothing * Time.deltaTime);
 				}
-
 			}
 			
 			//-- Check If Player Stopped
@@ -429,7 +527,39 @@ namespace FXnRXn
 			//-- Check If Player Start Moving
 			private void CheckIfStarting()
 			{
-				
+				locomotionStartTimer = VariableOverrideDelayTimer(locomotionStartTimer);
+
+				bool isStartingCheck = false;
+
+				if (locomotionStartTimer <= 0.0f)
+				{
+					if (moveDirection.magnitude > 0.01 && speed2D < 1 && !isStrafing)
+					{
+						isStartingCheck = true;
+					}
+
+					if (isStartingCheck)
+					{
+						if (!isStarting)
+						{
+							locomotionStartTimer = newDirectionDifferenceAngle;
+							//playerAnim.SetFloat(locomotionStartDirectionHash, locomotionStartDirection);
+						}
+						float delayTime = 0.2f;
+						leanDelay = delayTime;
+						headLookDelay = delayTime;
+						bodyLookDelay = delayTime;
+
+						locomotionStartTimer = delayTime;
+					}
+				}
+				else
+				{
+					isStartingCheck = true;
+				}
+
+				isStarting = isStartingCheck;
+				playerAnim.SetBool(isStartingHash, isStarting);
 			}
 
 			private void UpdateStrafeDirection(float TargetZ, float TargetX)
@@ -469,6 +599,134 @@ namespace FXnRXn
 			}
 			#endregion
 
+			#region Check
+
+			private void CheckEnableTurns()
+			{
+				headLookDelay = VariableOverrideDelayTimer(headLookDelay);
+				enableHeadTurn = headLookDelay == 0.0f && !isStarting;
+				bodyLookDelay = VariableOverrideDelayTimer(bodyLookDelay);
+				enableBodyTurn = bodyLookDelay == 0.0f && !(isStarting || isTurningInPlace);
+			}
+			
+			private void CheckEnableLean()
+			{
+				leanDelay = VariableOverrideDelayTimer(leanDelay);
+				enableLean = leanDelay == 0.0f && !(isStarting || isTurningInPlace);
+			}
+			#endregion
+
+			#region Lean and Offsets
+
+			private void CalculateRotationalAdditives(bool _leansActivated, bool _headLookActivated,
+				bool _bodyLookActivated)
+			{
+				if (_headLookActivated || _leansActivated || _bodyLookActivated)
+				{
+					currentRotation = transform.forward;
+
+					rotationRate = currentRotation != previousRotation
+						? Vector3.SignedAngle(currentRotation, previousRotation, Vector3.up) / Time.deltaTime * -1f
+						: 0f;
+					
+				}
+				// Lean
+				initialLeanValue = _leansActivated ? rotationRate : 0f;
+				float leanSmoothness = 5;
+				float maxLeanRotationRate = 275.0f;
+
+				float referenceValue = speed2D / sprintSpeed;
+				leanValue = CalculateSmoothedValue(leanValue, initialLeanValue, maxLeanRotationRate, leanSmoothness,
+					leanCurve, referenceValue, true);
+				
+				// Head Turn
+				float headTurnSmoothness = 5f;
+
+				if (_headLookActivated && isTurningInPlace)
+				{
+					initialTurnValue = cameraRotationOffset;
+					headLookX = Mathf.Lerp(headLookX, initialTurnValue / 200, headTurnSmoothness * Time.deltaTime);
+				}
+				else
+				{
+					initialTurnValue = _headLookActivated ? rotationRate : 0f;
+					headLookX = CalculateSmoothedValue(headLookX, initialTurnValue, maxLeanRotationRate, 
+						headTurnSmoothness, headLookXCurve, headLookX, false);
+				}
+				
+				// Body Turn
+				float bodyTurnSmoothness = 5f;
+
+				initialTurnValue = _bodyLookActivated ? rotationRate : 0f;
+				
+				bodyLookX = CalculateSmoothedValue(
+					bodyLookX,
+					initialTurnValue,
+					maxLeanRotationRate,
+					bodyTurnSmoothness,
+					bodyLookXCurve,
+					bodyLookX,
+					false
+				);
+
+				float cameraTilt = cameraController.GetCameraTiltX();
+				cameraTilt = (cameraTilt > 180f ? cameraTilt - 360f : cameraTilt) / -180;
+				cameraTilt = Mathf.Clamp(cameraTilt, -0.1f, 1.0f);
+				headLookX = cameraTilt;
+				bodyLookX = cameraTilt;
+
+				previousRotation = currentRotation;
+			}
+
+			private float CalculateSmoothedValue(
+				float mainVariable,
+				float newValue,
+				float maxRateChange,
+				float smoothness,
+				AnimationCurve referenceCurve,
+				float referenceValue,
+				bool isMultiplier
+			)
+			{
+				float changeVariable = newValue / maxRateChange;
+
+				changeVariable = Mathf.Clamp(changeVariable, -1.0f, 1.0f);
+
+				if (isMultiplier)
+				{
+					float multiplier = referenceCurve.Evaluate(referenceValue);
+					changeVariable *= multiplier;
+				}
+				else
+				{
+					changeVariable = referenceCurve.Evaluate(changeVariable);
+				}
+
+				if (!changeVariable.Equals(mainVariable))
+				{
+					changeVariable = Mathf.Lerp(mainVariable, changeVariable, smoothness * Time.deltaTime);
+				}
+
+				return changeVariable;
+			}
+
+			private float VariableOverrideDelayTimer(float _timeVariable)
+			{
+				if (_timeVariable > 0.0f)
+				{
+					_timeVariable -= Time.deltaTime;
+					_timeVariable = Mathf.Clamp(_timeVariable, 0.0f, 1.0f);
+				}
+				else
+				{
+					_timeVariable = 0.0f;
+				}
+
+				return _timeVariable;
+			}
+
+			#endregion
+
 		#endregion
 
 
@@ -482,6 +740,7 @@ namespace FXnRXn
 		private void UpdateLocomotionState()
 		{
 			GroundedCheck();
+			ApplyGravity();
 			// if (!isGrounded)
 			// {
 			// 	SwitchState(AnimationState.Fall);
@@ -491,9 +750,9 @@ namespace FXnRXn
 			// 	SwitchState(AnimationState.Crouch);
 			// }
 			
-			// CheckEnableTurns();
-			// CheckEnableLean();
-			// CalculateRotationalAdditives(_enableLean, _enableHeadTurn, _enableBodyTurn);
+			CheckEnableTurns();
+			CheckEnableLean();
+			CalculateRotationalAdditives(enableLean, enableHeadTurn, enableBodyTurn);
 			
 			CalculateMoveDirection();
 			CheckIfStarting();
