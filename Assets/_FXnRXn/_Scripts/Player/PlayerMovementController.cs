@@ -201,6 +201,24 @@ namespace FXnRXn
 
 		#region STATE
 
+			#region Walking State
+			private void ToggleWalk()
+			{
+				EnableWalk(!isWalking);
+			}
+			private void EnableWalk(bool enable)
+			{
+				isWalking = enable && isGrounded && !isSprinting;
+			}
+
+			#endregion
+		
+			#region Sprinting State
+
+		
+
+			#endregion
+
 			#region State Change
 
 			private void SwitchState(AnimationState _newState)

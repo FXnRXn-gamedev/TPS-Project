@@ -53,16 +53,17 @@ namespace FXnRXn
 		private void Awake()
 		{
 			if (instance == null) instance = this;
-		}
-
-		private void Start()
-		{
-
 			if (mainCamera == null)
 			{
 				mainCamera = GetComponentInChildren<Camera>();
 				gameCamera = transform.GetChild(0);
 			}
+		}
+
+		private void Start()
+		{
+
+			
 			if (inputReader == null)inputReader = InputHandler.instance;
 			if (mainCharacter == null) mainCharacter = GameObject.FindGameObjectWithTag("Player");
 			if (playerTarget == null && lockOnTarget == null)
@@ -150,6 +151,8 @@ namespace FXnRXn
 		public Vector3 GetCameraRightZeroedYNormalised() => GetCameraRightZeroedY().normalized;
 
 		public float GetCameraTiltX() => mainCamera.transform.eulerAngles.x;
+
+		public Camera GetMainCamera() => mainCamera;
 
 
 	}// CameraController

@@ -7,6 +7,9 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/_FXnRXn/_Scripts/Weapon/Crosshair/CrosshairProfileData.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
   <component name="ProjectId" id="2wMEjROzMFiyy9YN9Eip07ng4KM" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -54,7 +57,11 @@
       <workItem from="1745843509083" duration="30000" />
       <workItem from="1745844166329" duration="1461000" />
       <workItem from="1745889964462" duration="17503000" />
-      <workItem from="1746179275968" duration="1447000" />
+      <workItem from="1746179275968" duration="1448000" />
+      <workItem from="1746195753173" duration="647000" />
+      <workItem from="1746237613368" duration="21637000" />
+      <workItem from="1746322440585" duration="12404000" />
+      <workItem from="1746351354507" duration="1492000" />
     </task>
     <servers />
   </component>
