@@ -16,8 +16,6 @@ ModelImporter:
     optimizeGameObjects: 0
     removeConstantScaleCurves: 0
     motionNodeName: 
-    rigImportErrors: 
-    rigImportWarnings: 
     animationImportErrors: 
     animationImportWarnings: 
     animationRetargetingWarnings: 
@@ -36,7 +34,7 @@ ModelImporter:
       name: A_Shuffle_Standing_R_Masc
       takeName: A_Shuffle_Standing_R_Masc
       internalID: -4372553781678782961
-      firstFrame: 3.5
+      firstFrame: 1
       lastFrame: 21
       wrapMode: 0
       orientationOffsetY: 0

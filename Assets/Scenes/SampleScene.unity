@@ -10241,12 +10241,12 @@ MonoBehaviour:
   controller: {fileID: 0}
   alwaysStrafe: 1
   walkSpeed: 1.4
-  runSpeed: 2.5
+  runSpeed: 3
   sprintSpeed: 7
   speedChangeDamping: 10
   rotationSmoothing: 10
   cameraRotationOffset: 0
-  buttonHoldThreshold: 0.25
+  buttonHoldThreshold: 0.15
   shuffleDirectionX: 0
   shuffleDirectionZ: 0
   rearRayPos: {fileID: 0}
@@ -27795,8 +27795,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 256, y: 256}
-  m_SizeDelta: {x: 320, y: 320}
+  m_AnchoredPosition: {x: 274, y: 274}
+  m_SizeDelta: {x: 380, y: 380}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2174675983176573982
 MonoBehaviour:

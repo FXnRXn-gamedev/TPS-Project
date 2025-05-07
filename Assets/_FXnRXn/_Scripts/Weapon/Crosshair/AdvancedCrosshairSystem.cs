@@ -261,7 +261,6 @@ namespace FXnRXn
 			{
 				float angle = i * angleStep * Mathf.Deg2Rad;
 				Vector2 direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
-				Debug.Log(direction);
 				CreateCrosshairElement(direction , currentProfile.crosshairType);
 			}
 		}

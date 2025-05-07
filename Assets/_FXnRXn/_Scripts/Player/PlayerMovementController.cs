@@ -593,9 +593,10 @@ namespace FXnRXn
 
 			#region Ground Check
 
+			
 			private void GroundedCheck()
 			{
-				Vector3 spherePosition = new Vector3(controller.transform.position.x, controller.transform.position.x - groundedOffset, controller.transform.position.z);
+				Vector3 spherePosition = new Vector3(controller.transform.position.x, controller.transform.position.y - groundedOffset, controller.transform.position.z);
 
 				isGrounded = Physics.CheckSphere(spherePosition, controller.radius, groundLayerMask,
 					QueryTriggerInteraction.Ignore);
@@ -795,7 +796,6 @@ namespace FXnRXn
 
 
 		#region Gizmo
-
 		
 
 		#endregion
