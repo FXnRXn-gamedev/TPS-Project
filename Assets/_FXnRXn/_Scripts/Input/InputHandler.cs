@@ -7,6 +7,14 @@ namespace FXnRXn
 	{
 		public static InputHandler instance { get; private set; }
 		
+		private bool _isRunning;
+
+		public bool IsRunning
+		{
+			get => _isRunning;
+			set => _isRunning = value;
+		}
+		
 		
 		[Header("REFFERENCE :")] 
 		[SerializeField] private Joystick						inputJoystick;
@@ -41,6 +49,11 @@ namespace FXnRXn
 		{
 			SetupControllerMovement();
 			SetupCameraMovement();
+
+			if (GetMovementInput().y > 1f)
+			{
+				Debug.Log("Sprint");
+			}
 		}
 
 

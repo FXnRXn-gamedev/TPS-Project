@@ -9,6 +9,7 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/_FXnRXn/_Scripts/Weapon/Crosshair/CrosshairProfileData.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_FXnRXn/_Scripts/UI/UIOverlapDetector.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="2wMEjROzMFiyy9YN9Eip07ng4KM" />
   <component name="ProjectViewState">
@@ -63,7 +64,10 @@
       <workItem from="1746322440585" duration="12404000" />
       <workItem from="1746351354507" duration="1492000" />
       <workItem from="1746446972273" duration="2391000" />
-      <workItem from="1746582998588" duration="1405000" />
+      <workItem from="1746582998588" duration="4619000" />
+      <workItem from="1746612622817" duration="11942000" />
+      <workItem from="1746672820037" duration="1665000" />
+      <workItem from="1747135462966" duration="425000" />
     </task>
     <servers />
   </component>

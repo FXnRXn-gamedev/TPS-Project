@@ -3365,7 +3365,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: AC_Polygon_Masculine
+  m_Name: CharacterAnimController
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: MovementInputTapped
@@ -4420,7 +4420,7 @@ BlendTree:
   - serializedVersion: 2
     m_Motion: {fileID: -1285832947374115681}
     m_Threshold: 1.4
-    m_Position: {x: 3, y: 1}
+    m_Position: {x: 1.5, y: 1}
     m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: MoveSpeed
@@ -4428,7 +4428,7 @@ BlendTree:
   - serializedVersion: 2
     m_Motion: {fileID: 3934637986742485619}
     m_Threshold: 5
-    m_Position: {x: 5, y: 1}
+    m_Position: {x: 2, y: 1}
     m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: MoveSpeed
@@ -4436,7 +4436,7 @@ BlendTree:
   - serializedVersion: 2
     m_Motion: {fileID: 8622675888200257999}
     m_Threshold: 10
-    m_Position: {x: 7, y: 1}
+    m_Position: {x: 4, y: 1}
     m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: MoveSpeed
@@ -4452,7 +4452,7 @@ BlendTree:
   - serializedVersion: 2
     m_Motion: {fileID: 7260252319837902946}
     m_Threshold: 40
-    m_Position: {x: 7, y: 0}
+    m_Position: {x: 4, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: MoveSpeed
@@ -4460,7 +4460,7 @@ BlendTree:
   - serializedVersion: 2
     m_Motion: {fileID: -17163560894783883}
     m_Threshold: 45
-    m_Position: {x: 5, y: 0}
+    m_Position: {x: 2, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: MoveSpeed
@@ -4468,7 +4468,7 @@ BlendTree:
   - serializedVersion: 2
     m_Motion: {fileID: -4691383994511431829}
     m_Threshold: 50
-    m_Position: {x: 3, y: 0}
+    m_Position: {x: 1.5, y: 0}
     m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: MoveSpeed
@@ -5963,24 +5963,18 @@ AnimatorStateMachine:
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions:
-  - first: {fileID: 6604365710422616744}
+  - first: {fileID: -5154619669261682928}
     second:
-    - {fileID: -3517661301517864862}
-    - {fileID: -6227355769409907656}
-    - {fileID: 2329043323636272095}
-    - {fileID: 8729326463916878837}
-    - {fileID: 5136232646514219606}
-    - {fileID: 6949266989534911494}
+    - {fileID: 3300079922274740214}
+    - {fileID: -7189439974797700697}
+    - {fileID: 2287159477214047374}
+    - {fileID: 2932082331911690083}
+    - {fileID: -8281619679422675082}
+    - {fileID: 4165883047342736306}
   - first: {fileID: -604509978038405557}
     second:
     - {fileID: -2715779380421804842}
     - {fileID: 3705668569526434236}
-  - first: {fileID: 3537954082607230901}
-    second:
-    - {fileID: -2177846080100714554}
-    - {fileID: 3452755659886607670}
-    - {fileID: 4348406899900917072}
-    - {fileID: -2710829411721907783}
   - first: {fileID: 1790282451161604178}
     second:
     - {fileID: -8118438887669713725}
@@ -5990,24 +5984,30 @@ AnimatorStateMachine:
     - {fileID: -1537389802226702764}
     - {fileID: -8454007508122442119}
     - {fileID: -494253774927471600}
-  - first: {fileID: -5154619669261682928}
+  - first: {fileID: 3537954082607230901}
     second:
-    - {fileID: 3300079922274740214}
-    - {fileID: -7189439974797700697}
-    - {fileID: 2287159477214047374}
-    - {fileID: 2932082331911690083}
-    - {fileID: -8281619679422675082}
-    - {fileID: 4165883047342736306}
+    - {fileID: -2177846080100714554}
+    - {fileID: 3452755659886607670}
+    - {fileID: 4348406899900917072}
+    - {fileID: -2710829411721907783}
+  - first: {fileID: 3652802291553319676}
+    second:
+    - {fileID: -8534850880604765477}
+    - {fileID: -4178063635055931915}
   - first: {fileID: 5175383130503594698}
     second:
     - {fileID: 2939765361409422258}
     - {fileID: 148739612534417992}
     - {fileID: 3656533616568830837}
     - {fileID: 7185925154260828547}
-  - first: {fileID: 3652802291553319676}
+  - first: {fileID: 6604365710422616744}
     second:
-    - {fileID: -8534850880604765477}
-    - {fileID: -4178063635055931915}
+    - {fileID: -3517661301517864862}
+    - {fileID: -6227355769409907656}
+    - {fileID: 2329043323636272095}
+    - {fileID: 8729326463916878837}
+    - {fileID: 5136232646514219606}
+    - {fileID: 6949266989534911494}
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 20, y: -100, z: 0}
   m_EntryPosition: {x: 320, y: -70, z: 0}

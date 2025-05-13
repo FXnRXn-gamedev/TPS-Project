@@ -88,7 +88,7 @@ namespace FXnRXn
 		}
 
 
-		private void Update()
+		private void LateUpdate()
 		{
 			float positionalFollowSpeed = 1 / (positionalCameraLag / LAG_DELTA_TIME_ADJUSTMENT);
 			float rotationalFollowSpeed = 1 / (rotationalCameraLag / LAG_DELTA_TIME_ADJUSTMENT);

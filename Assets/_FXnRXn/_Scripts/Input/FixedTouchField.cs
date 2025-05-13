@@ -37,7 +37,7 @@ public class FixedTouchField : MonoBehaviour, IPointerDownHandler, IPointerUpHan
         }
         else
         {
-            TouchDist = Vector2.zero;
+            TouchDist = Vector2.zero; //Vector2.zero
         }
     }
 

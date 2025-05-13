@@ -162,6 +162,7 @@ namespace FXnRXn
 		private float												strafeDirectionX;
 		private float												strafeDirectionZ;
 		private float												locomotionStartTimer;
+		private float												locomotionStartDirection;
 		
 		
 		private const float											STRAFE_DIRECTION_DAMP_TIME	= 20f;
@@ -184,9 +185,10 @@ namespace FXnRXn
 
 		private void Start()
 		{
+			isStrafing = alwaysStrafe;
 			Init();
 
-			isStrafing = alwaysStrafe;
+			
 			SwitchState(AnimationState.Locomotion);
 		}
 
@@ -196,6 +198,8 @@ namespace FXnRXn
 			if (playerAnim == null) playerAnim = GetComponentInChildren<Animator>();
 			if (controller == null) controller = GetComponent<CharacterController>();
 			if(cameraController == null) cameraController = CameraController.instance;
+			//ActivateSprint();
+			DeactivateSprint();
 		}
 
 
@@ -215,7 +219,26 @@ namespace FXnRXn
 		
 			#region Sprinting State
 
-		
+			public void ActivateSprint()
+			{
+				Debug.Log("Activate Sprint");
+				if (!isCrouching)
+				{
+					EnableWalk(false);
+					isSprinting = true;
+					isStrafing = false;
+				}
+			}
+			public void DeactivateSprint()
+			{
+				Debug.Log("Deactivate Sprint");
+				isSprinting = false;
+
+				if (alwaysStrafe || isAiming)
+				{
+					isStrafing = true;
+				}
+			}
 
 			#endregion
 
@@ -319,7 +342,7 @@ namespace FXnRXn
 				playerAnim.SetBool(isWalkingHash, isWalking);
 				playerAnim.SetBool(isStoppedHash, isStopped);
 
-				//playerAnim.SetFloat(locomotionStartDirectionHash, locomotionStartDirection);
+				playerAnim.SetFloat(locomotionStartDirectionHash, locomotionStartDirection);
 			}
 
 			#endregion
@@ -560,8 +583,8 @@ namespace FXnRXn
 					{
 						if (!isStarting)
 						{
-							locomotionStartTimer = newDirectionDifferenceAngle;
-							//playerAnim.SetFloat(locomotionStartDirectionHash, locomotionStartDirection);
+							locomotionStartDirection = newDirectionDifferenceAngle;
+							playerAnim.SetFloat(locomotionStartDirectionHash, locomotionStartDirection);
 						}
 						float delayTime = 0.2f;
 						leanDelay = delayTime;
