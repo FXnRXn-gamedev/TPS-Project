@@ -17,8 +17,8 @@ namespace FXnRXn
 		
 		
 		[Header("REFFERENCE :")] 
-		[SerializeField] private Joystick						inputJoystick;
-		[SerializeField] private FixedTouchField				touchField;
+		[SerializeField] private Joystick						inputMoveJoystick;
+		[SerializeField] private Joystick						inputLookJoystick;
 
 		[Header("SETTINGS :")] 
 		[SerializeField] private Vector2						moveComposite;
@@ -33,40 +33,25 @@ namespace FXnRXn
 			{
 				instance = this;
 			}
-			
-			if (inputJoystick == null)
-			{
-				inputJoystick = FindFirstObjectByType<Joystick>();
-			}
-
-			if (touchField == null)
-			{
-				touchField = FindFirstObjectByType<FixedTouchField>();
-			}
 		}
 
 		private void Update()
 		{
-			SetupControllerMovement();
-			SetupCameraMovement();
-
-			if (GetMovementInput().y > 1f)
-			{
-				Debug.Log("Sprint");
-			}
+			SetupInputControllerMovement();
+			SetupInputCameraMovement();
 		}
 
 
-		private void SetupControllerMovement()
+		private void SetupInputControllerMovement()
 		{
-			if (inputJoystick == null) return;
+			if (inputMoveJoystick == null) return;
 			
 
-			if (new Vector2(inputJoystick.Horizontal, inputJoystick.Vertical).magnitude > 0)
+			if (new Vector2(inputMoveJoystick.Horizontal, inputMoveJoystick.Vertical).magnitude > 0)
 			{
 				movementInputDetected = true;
-				moveComposite.x = inputJoystick.Horizontal;
-				moveComposite.y = inputJoystick.Vertical;
+				moveComposite.x = inputMoveJoystick.Horizontal;
+				moveComposite.y = inputMoveJoystick.Vertical;
 			}
 			else
 			{
@@ -75,11 +60,11 @@ namespace FXnRXn
 			}
 		}
 
-		private void SetupCameraMovement()
+		private void SetupInputCameraMovement()
 		{
-			if (touchField == null) return;
+			if (inputLookJoystick == null) return;
 			
-			lookInput = touchField.TouchDist;
+			lookInput = inputLookJoystick.Direction;
 
 		}
 
