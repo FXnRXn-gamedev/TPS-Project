@@ -2,10 +2,12 @@ using System;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
+using Unity.Netcode;
 
 namespace FXnRXn
 {
-	public class PlayerMovementController : MonoBehaviour
+	[RequireComponent(typeof(CharacterController), typeof(NetworkObject))]
+	public class PlayerMovementController : NetworkBehaviour
 	{
 		public static PlayerMovementController instance { get; private set; }
 		
@@ -80,6 +82,8 @@ namespace FXnRXn
 		[SerializeField] private InputHandler						inputHandler;
 		[SerializeField] private Animator							playerAnim;
 		[SerializeField] private CharacterController				controller;
+		[SerializeField] private Transform							playerTarget;
+		[SerializeField] private Transform							lockOnTarget;
 
 		[Header("Game Settings :")]
 		[Space(10)]
@@ -180,25 +184,27 @@ namespace FXnRXn
 		private void Awake()
 		{
 			if (instance == null) instance = this;
-			
 		}
 
 		private void Start()
 		{
 			isStrafing = alwaysStrafe;
-			Init();
-
 			
-			SwitchState(AnimationState.Locomotion);
+			
 		}
 
-		private void Init()
+		public override void OnNetworkSpawn()
 		{
-			if (inputHandler == null)inputHandler = InputHandler.instance;
+			if(!IsOwner) return;
+			
+			if(cameraController == null) cameraController = CameraController.instance;
+			if (inputHandler == null) inputHandler = InputHandler.instance;
 			if (playerAnim == null) playerAnim = GetComponentInChildren<Animator>();
 			if (controller == null) controller = GetComponent<CharacterController>();
-			if(cameraController == null) cameraController = CameraController.instance;
-			//ActivateSprint();
+			
+			
+			cameraController.Init(transform, playerTarget, lockOnTarget);
+			SwitchState(AnimationState.Locomotion);
 			DeactivateSprint();
 		}
 
@@ -221,7 +227,6 @@ namespace FXnRXn
 
 			public void ActivateSprint()
 			{
-				Debug.Log("Activate Sprint");
 				if (!isCrouching)
 				{
 					EnableWalk(false);
@@ -231,7 +236,6 @@ namespace FXnRXn
 			}
 			public void DeactivateSprint()
 			{
-				Debug.Log("Deactivate Sprint");
 				isSprinting = false;
 
 				if (alwaysStrafe || isAiming)
@@ -291,6 +295,8 @@ namespace FXnRXn
 
 			private void Update()
 			{
+				if(!IsOwner) return;
+				
 				switch (currentState)
 				{
 					case AnimationState.Locomotion:
@@ -803,6 +809,8 @@ namespace FXnRXn
 			Move();
 			UpdateAnimatorController();
 			
+			SyncMoveServerRpc(controller.transform.position, controller.transform.rotation);
+			
 		}
 
 		private void ExitLocomotionState()
@@ -818,9 +826,22 @@ namespace FXnRXn
 		#endregion
 
 
-		#region Gizmo
-		
+		#region Server RPC
+		[ServerRpc]
+		private void SyncMoveServerRpc(Vector3 pos, Quaternion rot)
+		{
+			transform.SetPositionAndRotation(pos, rot);
+			SyncMoveClientRpc(controller.transform.position, controller.transform.rotation);
+		}
 
+		#endregion
+		
+		#region Client RPC
+		[ClientRpc]
+		private void SyncMoveClientRpc(Vector3 pos, Quaternion rot)
+		{
+			transform.SetPositionAndRotation(pos, rot);
+		}
 		#endregion
 		
 	}

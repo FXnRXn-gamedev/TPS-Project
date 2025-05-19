@@ -1,9 +1,11 @@
 using System;
+using Unity.Netcode;
 using UnityEngine;
 
 namespace FXnRXn
 {
-	public class CameraController : MonoBehaviour
+	[RequireComponent(typeof(NetworkObject))]
+	public class CameraController : NetworkBehaviour
 	{
 		public static CameraController							instance { get; private set; }
 		private const int										LAG_DELTA_TIME_ADJUSTMENT = 20;
@@ -60,16 +62,29 @@ namespace FXnRXn
 			}
 		}
 
-		private void Start()
+		public override void OnNetworkSpawn()
 		{
-
+			if (IsClient)
+			{
+				mainCamera.gameObject.SetActive(true);
+				transform.gameObject.SetActive(true);
+			}
+			else
+			{
+				mainCamera.gameObject.SetActive(false);
+				transform.gameObject.SetActive(false);
+			}
 			
 			if (inputReader == null)inputReader = InputHandler.instance;
-			if (mainCharacter == null) mainCharacter = GameObject.FindGameObjectWithTag("Player");
-			if (playerTarget == null && lockOnTarget == null)
-			{
-				Debug.LogWarning(" !! Please assign playerTarget & lockOnTarget Value at CameraController Script !!");
-			}
+		}
+
+
+		public void Init(Transform _player, Transform _target, Transform _lockOn)
+		{
+			if (mainCharacter == null) mainCharacter = _player.gameObject;
+			
+			playerTarget = _target;
+			lockOnTarget = _lockOn;
 
 			if (hideCursor)
 			{
@@ -90,6 +105,8 @@ namespace FXnRXn
 
 		private void LateUpdate()
 		{
+			if(inputReader == null || playerTarget == null || lockOnTarget == null) return;
+			
 			float positionalFollowSpeed = 1 / (positionalCameraLag / LAG_DELTA_TIME_ADJUSTMENT);
 			float rotationalFollowSpeed = 1 / (rotationalCameraLag / LAG_DELTA_TIME_ADJUSTMENT);
 

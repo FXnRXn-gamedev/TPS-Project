@@ -1,12 +1,14 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
 
 namespace FXnRXn
 {
-	public class GameManager : MonoBehaviour
+	[RequireComponent(typeof(NetworkObject))]
+	public class GameManager : NetworkBehaviour
 	{
 		[Header("GAME SETTING : ")] 
 		[Range(0, 300)][SerializeField] private int						targetFrameRate = 300;

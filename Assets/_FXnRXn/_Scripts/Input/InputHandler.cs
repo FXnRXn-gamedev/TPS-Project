@@ -1,9 +1,11 @@
 using System;
+using Unity.Netcode;
 using UnityEngine;
 
 namespace FXnRXn
 {
-	public class InputHandler : MonoBehaviour
+	[RequireComponent(typeof(NetworkObject))]
+	public class InputHandler : NetworkBehaviour
 	{
 		public static InputHandler instance { get; private set; }
 		
