@@ -11,4 +11,4 @@ It's a TPS personal project built on Unity6, target platform for now Mobile Devi
 
 **------ Dev Update : 1 ------**
 
-![1](https://github.com/user-attachments/assets/ec664b52-3d07-4d03-a17c-1403c93a75ad)
+![Animated GIF](https://github.com/user-attachments/assets/ec664b52-3d07-4d03-a17c-1403c93a75ad)
