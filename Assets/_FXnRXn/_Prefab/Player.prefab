@@ -3001,8 +3001,8 @@ MonoBehaviour:
     m_Bits: 1
   inclineAngle: 0
   groundedOffset: -0.14
-  jumpForce: 10
-  gravityMultiplier: 0.3
+  jumpForce: 4
+  gravityMultiplier: 1.4
   fallingDuration: 0
   forwardStrafeMinThreshold: -55
   forwardStrafeMaxThreshold: 125

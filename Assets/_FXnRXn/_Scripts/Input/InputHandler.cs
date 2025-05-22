@@ -27,6 +27,10 @@ namespace FXnRXn
 		[SerializeField] private Vector2						lookInput;
 		[SerializeField] private bool							movementInputDetected;
 		public float											movementInputDuration;
+		
+		
+		
+		public Action											onJumpPerformed;
 
 		//--------------------------------------------------------------------------------------------------------------
 		private void Awake()
@@ -68,6 +72,12 @@ namespace FXnRXn
 			
 			lookInput = inputLookJoystick.Direction;
 
+		}
+		
+		
+		public void OnJump()
+		{
+			onJumpPerformed?.Invoke();
 		}
 
 

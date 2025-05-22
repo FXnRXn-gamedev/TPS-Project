@@ -108,7 +108,7 @@ namespace FXnRXn
 		[SerializeField] private float								groundedOffset				= -0.14f;
 		
 		[Header("Player In-Air")]
-		[SerializeField] private float								jumpForce					= 10f;
+		[SerializeField] private float								jumpForce					= .1f;
 		[SerializeField] private float								gravityMultiplier			= 2f;
 		[SerializeField] private float								fallingDuration;
 		
@@ -172,11 +172,14 @@ namespace FXnRXn
 		private const float											STRAFE_DIRECTION_DAMP_TIME	= 20f;
 		private const float											ANIMATION_DAMP_TIME			= 5f;
 		private float												targetMaxSpeed;
+		private float												fallStartTime;
 		private Vector3												targetVelocity;
 		private Vector3												cameraForward;
 		private float												rotationRate;
 		private float												initialLeanValue;
 		private float												initialTurnValue;
+		
+		
 		
 		#endregion
 		
@@ -201,12 +204,14 @@ namespace FXnRXn
 			if (inputHandler == null) inputHandler = InputHandler.instance;
 			if (playerAnim == null) playerAnim = GetComponentInChildren<Animator>();
 			if (controller == null) controller = GetComponent<CharacterController>();
+
 			
 			
 			cameraController.Init(transform, playerTarget, lockOnTarget);
 			SwitchState(AnimationState.Locomotion);
 			DeactivateSprint();
 		}
+		
 
 
 		#region STATE
@@ -266,8 +271,10 @@ namespace FXnRXn
 						EnterLocomotionState();
 						break;
 					case AnimationState.Jump:
+						EnterJumpState();
 						break;
 					case AnimationState.Fall:
+						EnterFallState();
 						break;
 					case AnimationState.Crouch:
 						break;
@@ -283,6 +290,7 @@ namespace FXnRXn
 						ExitLocomotionState();
 						break;
 					case AnimationState.Jump:
+						ExitJumpState();
 						break;
 					case AnimationState.Crouch:
 						break;
@@ -297,14 +305,19 @@ namespace FXnRXn
 			{
 				if(!IsOwner) return;
 				
+				
+				SyncMoveServerRpc(controller.transform.position, controller.transform.rotation);
+				
 				switch (currentState)
 				{
 					case AnimationState.Locomotion:
 						UpdateLocomotionState();
 						break;
 					case AnimationState.Jump:
+						UpdateJumpState();
 						break;
 					case AnimationState.Fall:
+						UpdateFallState();
 						break;
 					case AnimationState.Crouch:
 						break;
@@ -775,6 +788,22 @@ namespace FXnRXn
 
 			#endregion
 
+			#region Falling
+
+			private void ResetFallingDuration()
+			{
+				fallStartTime = Time.time;
+				fallingDuration = 0f;
+			}
+
+			private void UpdateFallingDuration()
+			{
+				fallingDuration = Time.time - fallStartTime;
+			}
+			
+
+			#endregion
+
 		#endregion
 
 
@@ -782,7 +811,7 @@ namespace FXnRXn
 
 		private void EnterLocomotionState()
 		{
-			
+			inputHandler.onJumpPerformed += LocomotionToJumpState;
 		}
 
 		private void UpdateLocomotionState()
@@ -809,13 +838,15 @@ namespace FXnRXn
 			Move();
 			UpdateAnimatorController();
 			
-			SyncMoveServerRpc(controller.transform.position, controller.transform.rotation);
 			
+			
+			
+
 		}
 
 		private void ExitLocomotionState()
 		{
-			
+			inputHandler.onJumpPerformed -= LocomotionToJumpState;
 		}
 		
 		private void LocomotionToJumpState()
@@ -825,23 +856,96 @@ namespace FXnRXn
 
 		#endregion
 
+		#region Jump State
+
+		private void EnterJumpState()
+		{
+			playerAnim.SetBool(isJumpingAnimHash, true);
+			isSliding = false;
+			velocity = new Vector3(velocity.x, jumpForce, velocity.z);
+		}
+
+		private void UpdateJumpState()
+		{
+			ApplyGravity();
+			if (velocity.y <= 0f)
+			{
+				playerAnim.SetBool(isJumpingAnimHash, false);
+				SwitchState(AnimationState.Fall);
+			}
+			GroundedCheck();
+			
+			CalculateRotationalAdditives(false, enableHeadTurn, enableBodyTurn);
+			CalculateMoveDirection();
+			FaceMoveDirection();
+			Move();
+			UpdateAnimatorController();
+			
+			
+		}
+
+		private void ExitJumpState()
+		{
+			playerAnim.SetBool(isJumpingAnimHash, false);
+		}
+
+		#endregion
+
+		#region Fall State
+
+		private void EnterFallState()
+		{
+			ResetFallingDuration();
+			velocity.y = 0f;
+			
+			//DeactivateCrouch();
+			isSliding = false;
+		}
+		
+		private void UpdateFallState()
+		{
+			GroundedCheck();
+			CalculateRotationalAdditives(false, enableHeadTurn, enableBodyTurn);
+			
+			CalculateMoveDirection();
+			FaceMoveDirection();
+			
+			ApplyGravity();
+			Move();
+			UpdateAnimatorController();
+
+			if (controller.isGrounded)
+			{
+				SwitchState(AnimationState.Locomotion);
+			}
+			
+			UpdateFallingDuration();
+		}
+		
+		#endregion
+
 
 		#region Server RPC
 		[ServerRpc]
 		private void SyncMoveServerRpc(Vector3 pos, Quaternion rot)
 		{
-			transform.SetPositionAndRotation(pos, rot);
+			//transform.SetPositionAndRotation(pos, rot);
+			transform.position = Vector3.Lerp(transform.position, pos, 0.1f);
+			transform.rotation = Quaternion.Lerp(transform.rotation, rot, 0.1f);
 			SyncMoveClientRpc(controller.transform.position, controller.transform.rotation);
 		}
-
+		
 		#endregion
 		
 		#region Client RPC
 		[ClientRpc]
 		private void SyncMoveClientRpc(Vector3 pos, Quaternion rot)
 		{
-			transform.SetPositionAndRotation(pos, rot);
+			//transform.SetPositionAndRotation(pos, rot);
+			transform.position = Vector3.Lerp(transform.position, pos, 0.1f);
+			transform.rotation = Quaternion.Lerp(transform.rotation, rot, 0.1f);
 		}
+		
 		#endregion
 		
 	}
