@@ -31,6 +31,8 @@ namespace FXnRXn
 		
 		
 		public Action											onJumpPerformed;
+		public Action											onAimActivated;
+		public Action											onAimDeactivated;
 
 		//--------------------------------------------------------------------------------------------------------------
 		private void Awake()

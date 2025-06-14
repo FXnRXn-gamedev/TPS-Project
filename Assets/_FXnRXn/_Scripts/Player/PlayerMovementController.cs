@@ -75,8 +75,8 @@ namespace FXnRXn
 		#endregion
 
 		#region Player Settings Variables
-
-		[Header("Refference :")] 
+		
+		[Header("-------------		Refference :		-------------")]
 		[Space(10)] 
 		[SerializeField]private CameraController					cameraController;
 		[SerializeField] private InputHandler						inputHandler;
@@ -85,7 +85,8 @@ namespace FXnRXn
 		[SerializeField] private Transform							playerTarget;
 		[SerializeField] private Transform							lockOnTarget;
 
-		[Header("Game Settings :")]
+		
+		[Header("-------------		Game Settings :		-------------")]
 		[Space(10)]
 		[SerializeField] private bool								alwaysStrafe				= true;
 		[SerializeField] private float								walkSpeed					= 1.4f;
@@ -100,38 +101,42 @@ namespace FXnRXn
 		[SerializeField] private float								shuffleDirectionX;
 		[SerializeField] private float								shuffleDirectionZ;
 		
-		[Header("Grounded Angle")]
+		
+		[Header("-------------		Grounded Angle :		-------------")]
 		[SerializeField] private Transform							rearRayPos;
 		[SerializeField] private Transform							frontRayPos;
 		[SerializeField] private LayerMask							groundLayerMask;
 		[SerializeField] private float								inclineAngle;
 		[SerializeField] private float								groundedOffset				= -0.14f;
 		
-		[Header("Player In-Air")]
+		
+		[Header("-------------		Player In-Air :		-------------")]
 		[SerializeField] private float								jumpForce					= .1f;
 		[SerializeField] private float								gravityMultiplier			= 2f;
 		[SerializeField] private float								fallingDuration;
 		
-		[Header("Player Strafing")]
+		[Header("-------------		Player Strafing :		-------------")]
 		[SerializeField] private float								forwardStrafeMinThreshold	= -55.0f;
 		[SerializeField] private float								forwardStrafeMaxThreshold	= 125.0f;
 		[SerializeField] private float								forwardStrafe				= 1f;
 		
-		[Header("Player Head Look")]
+		
+		[Header("-------------		Player Head Look :		-------------")]
 		[SerializeField] private bool								enableHeadTurn				= true;
 		[SerializeField] private float								headLookDelay;
 		[SerializeField] private float								headLookX;
 		[SerializeField] private float								headLookY;
 		[SerializeField] private AnimationCurve						headLookXCurve;
 		
-		[Header("Player Body Look")]
+		
+		[Header("-------------		Player Body Look :		-------------")]
 		[SerializeField] private bool								enableBodyTurn				= true;
 		[SerializeField] private float								bodyLookDelay;
 		[SerializeField] private float								bodyLookX;
 		[SerializeField] private float								bodyLookY;
 		[SerializeField] private AnimationCurve						bodyLookXCurve;
 		
-		[Header("Player Lean")]
+		[Header("-------------		Player Lean :		-------------")]
 		[SerializeField] private bool								enableLean					= true;
 		[SerializeField] private float								leanDelay;
 		[SerializeField] private float								leanValue;

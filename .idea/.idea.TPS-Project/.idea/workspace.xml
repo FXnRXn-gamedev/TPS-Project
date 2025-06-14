@@ -10,6 +10,8 @@
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/Assets/_FXnRXn/_Scripts/UI/UIInputManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_FXnRXn/_Scripts/Weapon/Crosshair/CrosshairProfileData.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/../Netcode &amp; AWS Gamelift/Assets/_SimpleTPSMultiplayer/Scripts/Camera/CameraController.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_FXnRXn/_Scripts/Utility/GameEnum.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_FXnRXn/_Scripts/UI/UIOverlapDetector.cs" root0="FORCE_HIGHLIGHTING" />
   </component>
   <component name="ProjectId" id="2wMEjROzMFiyy9YN9Eip07ng4KM" />
@@ -73,6 +75,7 @@
       <workItem from="1747654800233" duration="3571000" />
       <workItem from="1747892423690" duration="12528000" />
       <workItem from="1747921269913" duration="1397000" />
+      <workItem from="1749877792361" duration="3014000" />
     </task>
     <servers />
   </component>

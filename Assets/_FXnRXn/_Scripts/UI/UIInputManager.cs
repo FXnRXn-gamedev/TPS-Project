@@ -14,11 +14,14 @@ namespace FXnRXn
 		[Space(10)] 
 		[SerializeField] private Button							jumpButton;
 
+
+		private bool localAim;
+
 		#endregion
 
 		public override void OnNetworkSpawn()
 		{
-			
+			localAim = false;
 		}
 
 		private void Start()
@@ -32,6 +35,26 @@ namespace FXnRXn
 				});
 			}
 			
+		}
+
+
+		public void AimButtonPressed()
+		{
+			localAim = !localAim;
+			SetAimButtonAction(localAim);
+
+		}
+
+		private void SetAimButtonAction(bool enable)
+		{
+			if (enable)
+			{
+				InputHandler.instance.onAimActivated?.Invoke();
+			}
+			else
+			{
+				InputHandler.instance.onAimDeactivated?.Invoke();
+			}
 		}
 	}
 }
