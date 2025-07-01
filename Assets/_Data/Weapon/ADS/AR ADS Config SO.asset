@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: AR ADS Config SO
   m_EditorClassIdentifier: 
   weaponType: 1
-  adsCameraOffset: {x: -0.05, y: -0.1, z: 0.55}
+  adsCameraOffset: {x: -0.05, y: -0.1, z: 0.6}
   adsSensitivityMultiplier: 0.1
   rotationOffset: {x: 2, y: 2, z: 2}

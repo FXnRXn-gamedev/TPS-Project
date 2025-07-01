@@ -2892,6 +2892,7 @@ GameObject:
   - component: {fileID: 693874624001773413}
   - component: {fileID: 8773135345902877097}
   - component: {fileID: 1514745958210682334}
+  - component: {fileID: 3206489140326487342}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -3141,8 +3142,48 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ShowTopMostFoldoutHeaderGroup: 1
-  TransitionStateInfoList: []
+  TransitionStateInfoList:
+  - IsCrossFadeExit: 0
+    Layer: 4
+    OriginatingState: -438497841
+    DestinationState: 1730147770
+    TransitionDuration: 0.1
+    TriggerNameHash: -1316629574
+    TransitionIndex: 0
+  - IsCrossFadeExit: 0
+    Layer: 4
+    OriginatingState: 1670388107
+    DestinationState: -372232821
+    TransitionDuration: 0.1
+    TriggerNameHash: -1316629574
+    TransitionIndex: 0
   m_Animator: {fileID: 7967751833879197065}
+--- !u!114 &3206489140326487342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4582590454845630666}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4469c8b49fa8a484bbebe95c4f010770, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ShowTopMostFoldoutHeaderGroup: 1
+  debugWeaponHolding: 1
+  weaponHolderPrefab: {fileID: 4782930194670322221, guid: f747ee40173a1ba42b9877b950f8b676, type: 3}
+  weaponConfigsData:
+  - {fileID: 11400000, guid: 227400e8faf869d4bb24e5611b188d4a, type: 2}
+  - {fileID: 11400000, guid: f23b4536b0a701a468c6f815a59bdaaa, type: 2}
+  - {fileID: 11400000, guid: 164910542fda5bd4495aa869b37b43b5, type: 2}
+  defaultWeaponIndex: 0
+  weaponLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  currentWeapon: {fileID: 0}
+  networkCurrentWeaponID:
+    m_InternalValue: -1
 --- !u!1 &4648756643682175258
 GameObject:
   m_ObjectHideFlags: 0

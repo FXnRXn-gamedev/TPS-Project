@@ -8,6 +8,9 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/_FXnRXn/_Scripts/Weapon/NetworkedWeaponHolder.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_FXnRXn/_Scripts/Weapon/WeaponConfigDataSO.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/_FXnRXn/_Scripts/Weapon/Weapon.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_FXnRXn/_Scripts/UI/UIInputManager.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/Assets/_FXnRXn/_Scripts/Weapon/Crosshair/CrosshairProfileData.cs" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/../Netcode &amp; AWS Gamelift/Assets/_SimpleTPSMultiplayer/Scripts/Camera/CameraController.cs" root0="SKIP_HIGHLIGHTING" />
@@ -24,7 +27,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="settings.editor.selected.configurable" value="editor.preferences.fonts.default" />
+    <property name="settings.editor.selected.configurable" value="preferences.toDoOptions" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
@@ -76,6 +79,8 @@
       <workItem from="1747892423690" duration="12528000" />
       <workItem from="1747921269913" duration="1397000" />
       <workItem from="1749877792361" duration="3014000" />
+      <workItem from="1749897062812" duration="10549000" />
+      <workItem from="1749949805292" duration="3078000" />
     </task>
     <servers />
   </component>
